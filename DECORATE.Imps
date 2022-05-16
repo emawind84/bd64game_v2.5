@@ -1,4 +1,4 @@
-actor 64DoomImp : DoomImp Replaces DoomImp
+actor 64DoomImp : DoomImp //Replaces DoomImp
 {
 +FLOORCLIP
 //+FORCEXYBILLBOARD																//R12.3
@@ -231,7 +231,7 @@ Painchance "SuperKick", 255
 	}
 }
 
-ACTOR 64ImpBall Replaces DoomImpBall
+ACTOR 64ImpBall //Replaces DoomImpBall
 {
 Radius 2
 Height 2
@@ -261,7 +261,7 @@ Decal "SmallerScorch"															//R28.3
 	}
 }
 
-actor 64StealthDoomImp : 64DoomImp Replaces StealthDoomImp
+actor 64StealthDoomImp : 64DoomImp //Replaces StealthDoomImp
 {
 +STEALTH
 }

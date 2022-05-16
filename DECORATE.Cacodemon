@@ -1,4 +1,4 @@
-actor 64Cacodemon : Cacodemon Replaces Cacodemon
+actor 64Cacodemon : Cacodemon //Replaces Cacodemon
 {
 +FLOORCLIP
 +FORCEXYBILLBOARD
@@ -132,7 +132,7 @@ Painchance "SuperKick", 255
 	}
 }
 
-ACTOR 64CacodemonBall : CacodemonBall Replaces CacodemonBall
+ACTOR 64CacodemonBall : CacodemonBall //Replaces CacodemonBall
 {
 Radius 2
 Height 2
@@ -161,7 +161,7 @@ Decal "SmallerScorch"															//R28.3
 	}
 }
 
-actor 64StealthCacodemon : StealthCacodemon Replaces StealthCacodemon
+actor 64StealthCacodemon : StealthCacodemon //Replaces StealthCacodemon
 {
 scale 0.75
 +MISSILEMORE

@@ -69,9 +69,6 @@ OptionMenu "BD64Menu" //R1 WAS OptionsMenu 03.11.17
 //dynamic spawn option																//R20	//R26 REVISED WITH NEW OPTIONS AND DESC.
 	StaticText "*  Performance Options-----------------------------------------"	//R28.4 ADDED DECAL OPTIONS
 		StaticText " "
-	Option "Enable Zandronum specific multiplayer scripts =", "isrunningzandronum", "YesOrNo"
-	Option "Select blood amount =", "zdoombrutalblood", "BrutalBlood"
-	Option "Enable floor/ceiling gore cleaner (removes after 30s) =", "zdoombrutaljanitor", "YesOrNo"
 	Option "Set max wall decal amount (Default is 1024) =", "cl_maxdecals", "DecalValue"		//R28.4 ADDED
 	Option "Enable floor/ceiling shot/blast decals =", "FloorDecal_Cvar", "YesOrNoFalse"		//R29 ADDED
 	Option "Set max gore amount (Default is 64) =", "sv_corpsequeuesize", "GoreValue"			//R29.1 ADDED
@@ -97,42 +94,6 @@ OptionMenu "BD64Menu" //R1 WAS OptionsMenu 03.11.17
 	Option "Replace all Hellhounds with Archviles =", "DynamicSpawnCvar2", "YesOrNo"
 	Option "Remove all Revenants, Hellhounds & Masterminds =", "DynamicSpawnCvar4", "YesOrNo"
 }
-
-/*OptionMenu "KetchupOptionsGZDoom"												//R29 REMOVED
-{
-Title "GZDoom Ketchup Options"
-StaticText " "
-
-Option "Please, select engine you are using.", "isrunningzandronum", "SelectEngineType"
-StaticText " "
-StaticText " "
-
-Option "Blood Amount", "zdoombrutalblood", "BrutalBlood"
-StaticText "How much blood you want to see?"
-StaticText " "
-
-Option "Enable Janitor", "zdoombrutaljanitor", "YesOrNo"
-StaticText "Makes gibs disappear after 30 seconds."
-StaticText " "
-}*/
-
-/*OptionMenu "KetchupOptionsZandronum"											//R29 REMOVED
-{
-Title "Zandronum Ketchup Options"
-StaticText " "
-
-Option "Please, select engine you are using.", "isrunningzandronum", "SelectEngineType"
-StaticText " "
-StaticText " "
-
-Option "Blood Amount", "bd_bloodamount", "BrutalBlood"
-StaticText "How much blood you want to see?"
-StaticText " "
-
-Option "Enable Janitor", "bd_lowgraphicsmode", "YesOrNo"
-StaticText "Makes gibs disappear after 30 seconds."
-StaticText " "
-}*/
 
 OptionValue "BrutalBlood"
 {

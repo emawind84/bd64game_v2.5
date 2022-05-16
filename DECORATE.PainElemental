@@ -1,4 +1,4 @@
-Actor 64PainElemental : PainElemental Replaces PainElemental
+Actor 64PainElemental : PainElemental //Replaces PainElemental
 {
 DamageFactor "CauseWaterSplash", 0.0
 DamageFactor "CauseObjectsToSplash", 0.0

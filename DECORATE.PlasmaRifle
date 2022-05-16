@@ -141,7 +141,7 @@ Decal SmallerScorch																//R28.3 WAS SCORCH
 	}
 }
 
-Actor 64ArachnotronPlasma: 64PlasmaBall Replaces ArachnotronPlasma
+Actor 64ArachnotronPlasma: 64PlasmaBall //Replaces ArachnotronPlasma
 {
 Speed 25
 Species "Spiders"

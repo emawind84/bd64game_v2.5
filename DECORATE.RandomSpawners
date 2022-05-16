@@ -115,7 +115,7 @@ Actor Dyn_WpnPower3Replacer Replaces Soulsphere
 }
 
 //R26
-Actor NImp_Random Replaces Doomimp
+Actor NImp_Random //Replaces Doomimp
 {
 +FLOORCLIP
 +NOBLOCKMONST
@@ -140,7 +140,7 @@ Actor NImp_Random Replaces Doomimp
 	}
 }
 
-Actor NSpectre_Random Replaces Spectre
+Actor NSpectre_Random //Replaces Spectre
 {
 +FLOORCLIP
 +NOBLOCKMONST
@@ -165,7 +165,7 @@ States
 	}
 }
 
-Actor NCacodemon_Random Replaces Cacodemon
+Actor NCacodemon_Random //Replaces Cacodemon
 {
 +MISSILEMORE
 +NOBLOCKMONST
@@ -192,7 +192,7 @@ Actor NCacodemon_Random Replaces Cacodemon
 	}
 }
 
-Actor Hellhound_Random Replaces Demon
+Actor Hellhound_Random //Replaces Demon
 {
 +FLOORCLIP
 +NOBLOCKMONST
@@ -217,7 +217,7 @@ Actor Hellhound_Random Replaces Demon
 	}
 }
 
-Actor Annihilator_Random Replaces Cyberdemon
+Actor Annihilator_Random //Replaces Cyberdemon
 {
 +BOSS
 +BOSSDEATH
@@ -251,7 +251,7 @@ Actor Annihilator_Random Replaces Cyberdemon
 ////////////////////////////
 //ARCHVILE HELLHOUND REPLACER
 ///////////////////////////
-Actor Dyn_ArchvileReplacer Replaces Archvile
+Actor Dyn_ArchvileReplacer //Replaces Archvile
 {
 	States
 	{
@@ -299,7 +299,7 @@ Actor Motherdemon_Spawner
 }
 
 //R26 BD64 TO D64 MONSTERS
-Actor D64_Archvile_Replacer Replaces Archvile
+Actor D64_Archvile_Replacer //Replaces Archvile
 {
 	States
 	{
@@ -319,7 +319,7 @@ Actor D64_Archvile_Replacer Replaces Archvile
 	}
 }
 
-Actor D64_Revenant_Replacer Replaces Revenant
+Actor D64_Revenant_Replacer //Replaces Revenant
 {
 	States
 	{
@@ -339,7 +339,7 @@ Actor D64_Revenant_Replacer Replaces Revenant
 	}
 }
 
-Actor D64_Mastermind_Replacer Replaces SpiderMastermind
+Actor D64_Mastermind_Replacer //Replaces SpiderMastermind
 {
 +BOSS
 +BOSSDEATH

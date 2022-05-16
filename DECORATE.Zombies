@@ -1,4 +1,4 @@
-actor 64ZombieMan : ZombieMan Replaces ZombieMan
+actor 64ZombieMan : ZombieMan //Replaces ZombieMan
 {
 +FLOORCLIP
 //+FORCEXYBILLBOARD																//R12.3
@@ -478,12 +478,12 @@ actor BrutalizedZombiemanPart2 : BrutalizedZombiemanPart1
 	}
 }
 
-actor 64StealthZombieMan : 64Zombieman Replaces StealthZombieMan
+actor 64StealthZombieMan : 64Zombieman //Replaces StealthZombieMan
 {
 +STEALTH
 }
 
-actor 64ShotgunGuy : 64Zombieman Replaces ShotgunGuy
+actor 64ShotgunGuy : 64Zombieman //Replaces ShotgunGuy
 {
 speed 6
 GibHealth 15
@@ -539,7 +539,7 @@ DropItem "64ShotgunTactical"													//R12.1
 	}
 }
 
-actor 64StealthShotgunGuy : 64ShotgunGuy Replaces StealthShotgunGuy
+actor 64StealthShotgunGuy : 64ShotgunGuy //Replaces StealthShotgunGuy
 {
 +STEALTH
 }
@@ -709,7 +709,7 @@ Decal "BulletDecalNew1"															//R28.3 ADDED
 	}
 }
 
-actor 64Zombiemarine : 64Zombieman Replaces WolfensteinSS
+actor 64Zombiemarine : 64Zombieman //Replaces WolfensteinSS
 {
 attacksound "grunt/attack"
 DropItem "64Rifle"																//R12.1
@@ -962,7 +962,7 @@ Speed 12
 	}
 }
 
-actor D64ChaingunnerReplacer : RandomSpawner Replaces Chaingunguy
+actor D64ChaingunnerReplacer : RandomSpawner //Replaces Chaingunguy
 {
 DropItem "64ZombieMarine"
 DropItem "64ZombieMarine"
@@ -970,7 +970,7 @@ DropItem "64Chaingunguy"
 }
 
 //INTRO MARINES
-actor IntroMarine : 64ZombieMarine Replaces MarinePistol						//R21 MOVED FROM DECORATE.INTROMARINES
+actor IntroMarine : 64ZombieMarine //Replaces MarinePistol						//R21 MOVED FROM DECORATE.INTROMARINES
 {
 +FLOORCLIP
 DamageFactor "CauseWaterSplash", 0.0

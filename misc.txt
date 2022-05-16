@@ -1,5 +1,5 @@
 /*
-actor 64RocketSmokeTrail : RocketSmokeTrail replaces RocketSmokeTrail
+actor 64RocketSmokeTrail : RocketSmokeTrail //replaces RocketSmokeTrail
 {
   Renderstyle Translucent
   Alpha 0.5

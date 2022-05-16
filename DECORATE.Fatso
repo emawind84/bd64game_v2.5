@@ -1,4 +1,4 @@
-actor 64Fatso : Fatso Replaces Fatso
+actor 64Fatso : Fatso //Replaces Fatso
 {
 +FLOORCLIP
 +DONTHURTSPECIES
@@ -119,12 +119,12 @@ Painchance "SuperKick", 255
 	}
 }
 
-actor 64StealthFatso : 64Fatso Replaces StealthFatso
+actor 64StealthFatso : 64Fatso //Replaces StealthFatso
 {
 +STEALTH
 }
 
-actor 64FatShot : FatShot Replaces FatShot
+actor 64FatShot : FatShot //Replaces FatShot
 {
 renderstyle normal
 scale 0.8
