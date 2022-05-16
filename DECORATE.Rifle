@@ -1,0 +1,148 @@
+ACTOR RifleSpawner : CustomInventory
+{
+//+INVENTORY.ALWAYSPICKUP														//R12.1
+Inventory.PickupMessage "You got an assault rifle!"
+Inventory.PickupSound "WPICK"
+Scale 0.82
+	States
+	{
+	Spawn:
+		RIFD A 1
+		RIFD A -1
+		Stop
+	Pickup:
+		TNT1 A 1
+//		TNT1 A 0 A_GiveInventory("Clip", 20)									//R12.1
+		TNT1 A 0 A_JumpIfInventory("IsTacticalClass", 1, "Pickup2")
+		TNT1 A 0 A_JumpIfInventory("IsModern", 1, "Pickup2")					//R28 ADDED
+		TNT1 A 0 A_GiveInventory("64Rifle", 1)
+		Stop
+	Pickup2:
+		TNT1 A 1
+		TNT1 A 0 A_GiveInventory("64RifleTactical", 1)
+		Stop
+	}
+}
+
+Actor FiredRifle : Inventory
+{
+inventory.maxamount 4
+}
+
+Actor 64Rifle : DoomWeapon
+{
+Weapon.SelectionOrder 800														//R21 WAS 500
+Weapon.AmmoUse 1
+Weapon.AmmoGive 10																//R11 WAS 0
+Weapon.AmmoType "Clip"
+Inventory.PickupMessage "You got the assault rifle!"							//R11 WAS "You got an assault rifle!"
+Obituary "%o was picked off by %k."								//r30.10 was $OB_MPCHAINGUN"
+Tag "Assault Rifle"																//R11 WAS $TAG_CHAINGUN
+Scale 0.82
+VisibleToPlayerClass "64DoomPlayer"												//R11
+Inventory.ForbiddenTo "Tactical64DoomPlayer","Tactical64DoomPlayer_p", "Modern"		//R11 ADDED	//R15 ADDED TACTICAL P	//R28 ADDED MODERN
++INVENTORY.RESTRICTABSOLUTELY
+	States
+	{
+	Spawn:
+		RIFD A 1
+		RIFD A -1
+		Stop
+	Ready:
+		RIFG A 1 A_WeaponReady
+		TNT1 A 0 A_JumpIfInventory("istacticalclass",1,"Ready")					//R28.2
+		TNT1 A 0 A_TakeInventory("Stamina", 0)									//R28.2
+		Loop
+	Select:
+		TNT1 AAAAA 1 A_Raise
+		TNT1 AAAAAAAAAA 0 A_Raise
+		Goto SelectAnimation
+	SelectAnimation:
+		TNT1 A 1
+//		TNT1 A 0 A_JumpIfInventory("IsTacticalClass", 1, "ReplaceTactical")		//R28 DISABLED
+		RIFS ABCD 1
+		Goto Ready
+/*	ReplaceTactical:
+		RIFS A 1
+		TNT1 A 0 A_GiveInventory("64RifleTactical", 1)
+		TNT1 A 0 A_TakeInventory("64Rifle", 1)
+		Goto Ready*/															//R28 DISABLED
+	Deselect:
+		RIFS DCBA 1
+		TNT1 AAAAAAAAAA 0 A_Lower
+		TNT1 A 1 A_Lower
+		Wait
+	Fire:
+		TNT1 A 0
+		TNT1 A 0 A_SetPitch (pitch-1.2)
+		RIFF AD 1 BRIGHT
+		TNT1 A 0 A_JumpIfInventory("FiredRifle", 4, "Fire4")
+		TNT1 A 0 A_JumpIfInventory("FiredRifle", 3, "Fire3")
+		TNT1 A 0 A_JumpIfInventory("FiredRifle", 2, "Fire2")
+		TNT1 A 0 A_JumpIfInventory("FiredRifle", 1, "Fire1")
+	Fire0:
+		TNT1 A 0 A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0)
+		TNT1 A 0 A_SpawnItemEx("PlayerMuzzle1",30,5,40)
+		TNT1 A 0 A_FireCustomMissile("Tracer", random(-3,3), 0, -1, -12, 0, random(-2,2))
+		SHTG A 0 A_FireBullets (0.0, 0.0, -1, 7, "RifleBulletPuff")				//R30.5 WAS HITPUFF
+		TNT1 A 0 A_PlaySound("RIFLE", 1)
+		RIFF BC 1 A_SetPitch (pitch+0.6)
+		TNT1 A 0 A_Firecustommissile("50CaseSpawn",0,0,-6,-18)
+		TNT1 A 0 A_GiveInventory("FiredRifle", 1)
+		RIFG A 1
+		TNT1 A 0 A_Refire
+		Goto FinishFire
+	Fire1:
+		TNT1 A 0 A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0)
+		TNT1 A 0 A_SpawnItemEx("PlayerMuzzle1",30,5,40)
+		TNT1 A 0 A_FireCustomMissile("Tracer", random(-3,3), 0, -1, -12, 0, random(-2,2))
+		SHTG A 0 A_FireBullets (0.6, 0.6, -1, 7, "RifleBulletPuff")				//R30.5 WAS HITPUFF
+		TNT1 A 0 A_PlaySound("RIFLE", 1)
+		RIFF BC 1 A_SetPitch (pitch+0.6)
+		TNT1 A 0 A_Firecustommissile("50CaseSpawn",0,0,-6,-18)
+		TNT1 A 0 A_GiveInventory("FiredRifle", 1)
+		RIFG A 1
+		TNT1 A 0 A_Refire
+		Goto FinishFire
+	Fire2:
+		TNT1 A 0 A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0)
+		TNT1 A 0 A_SpawnItemEx("PlayerMuzzle1",30,5,40)
+		TNT1 A 0 A_FireCustomMissile("Tracer", random(-3,3), 0, -1, -12, 0, random(-2,2))
+		SHTG A 0 A_FireBullets (2.0, 2.0, -1, 7, "RifleBulletPuff")				//R30.5 WAS HITPUFF
+		TNT1 A 0 A_PlaySound("RIFLE", 1)
+		RIFF BC 1 A_SetPitch (pitch+0.6)
+		TNT1 A 0 A_Firecustommissile("50CaseSpawn",0,0,-6,-18)
+		TNT1 A 0 A_GiveInventory("FiredRifle", 1)
+		RIFG A 1
+		TNT1 A 0 A_Refire
+		Goto FinishFire
+	Fire3:
+		TNT1 A 0 A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0)
+		TNT1 A 0 A_SpawnItemEx("PlayerMuzzle1",30,5,40)
+		TNT1 A 0 A_FireCustomMissile("Tracer", random(-3,3), 0, -1, -12, 0, random(-2,2))
+		SHTG A 0 A_FireBullets (4.0, 4.0, -1, 7, "RifleBulletPuff")				//R30.5 WAS HITPUFF
+		TNT1 A 0 A_PlaySound("RIFLE", 1)
+		RIFF BC 1 A_SetPitch (pitch+0.6)
+		TNT1 A 0 A_Firecustommissile("50CaseSpawn",0,0,-6,-18)
+		TNT1 A 0 A_GiveInventory("FiredRifle", 1)
+		RIFG A 1
+		TNT1 A 0 A_Refire
+		Goto FinishFire
+	Fire4:
+		TNT1 A 0 A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0)
+		TNT1 A 0 A_SpawnItemEx("PlayerMuzzle1",30,5,40)
+		TNT1 A 0 A_FireCustomMissile("Tracer", random(-3,3), 0, -1, -12, 0, random(-2,2))
+		SHTG A 0 A_FireBullets (7.0, 7.0, -1, 7, "RifleBulletPuff")				//R30.5 WAS HITPUFF
+		TNT1 A 0 A_PlaySound("RIFLE", 1)
+		RIFF BC 1 A_SetPitch (pitch+0.6)
+		TNT1 A 0 A_Firecustommissile("50CaseSpawn",0,0,-6,-18)
+		TNT1 A 0 A_GiveInventory("FiredRifle", 1)
+		RIFG A 1
+		TNT1 A 0 A_Refire
+		Goto FinishFire
+	FinishFire:
+		RIFG A 1
+		TNT1 A 0 A_TakeInventory("FiredRifle", 4)
+		Goto Ready
+	}
+}

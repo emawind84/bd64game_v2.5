@@ -1,0 +1,211 @@
+ACTOR RocketLauncherSpawner : CustomInventory Replaces RocketLauncher
+{
+//+INVENTORY.ALWAYSPICKUP														//R12.1
+Inventory.PickupMessage "$GOTLAUNCHER"
+Inventory.PickupSound "WPICK"
+Scale 0.82
+	States
+	{
+	Spawn:
+		LAUN A 1
+		TNT1 A 0 ACs_ExecuteAlways(119)
+		LAUN A 2
+		TNT1 A 0 A_JumpIfInventory("ISDM", 1, "DMSpawn")
+		LAUN A -1
+		Stop
+	Pickup:
+		TNT1 A 1
+//		TNT1 A 0 A_GiveInventory("RocketAmmo", 2)								//R12.1
+		TNT1 A 0 A_JumpIfInventory("IsTacticalClass", 1, "Pickup2")
+		TNT1 A 0 A_JumpIfInventory("IsModern", 1, "Pickup2")					//R28 ADDED
+		TNT1 A 0 A_GiveInventory("64RocketLauncher", 1)
+		Stop
+	Pickup2:
+		TNT1 A 1
+		TNT1 A 0 A_GiveInventory("64RocketLauncherTactical", 1)
+		Stop
+	DMSpawn:
+		TNT1 A 1
+		TNT1 A 0 A_ChangeFlag("THRUACTORS", 1)
+		TNT1 A 0 A_SpawnItem("64RocketLauncherDM")
+		TNT1 A 1000
+		Loop
+	}
+}
+
+Actor 64RocketLauncher : DoomWeapon
+{
+Weapon.SelectionOrder 2500														//R21 WAS 1000
+Weapon.AmmoUse 1
+Weapon.AmmoGive 2																//R11 WAS 0
+Weapon.AmmoType "RocketAmmo"
+Inventory.PickupMessage "$GOTLAUNCHER"
+Tag "$TAG_ROCKETLAUNCHER"
+Scale 0.82
+VisibleToPlayerClass "64DoomPlayer"												//R11
+Inventory.ForbiddenTo "Tactical64DoomPlayer","Tactical64DoomPlayer_p", "Modern"		//R11 ADDED	//R15 ADDED TACTICAL P	//R28 ADDED MODERN
++INVENTORY.RESTRICTABSOLUTELY													//R12.1
+	States
+	{
+	Ready:
+		MISG A 1 A_WeaponReady
+		TNT1 A 0 A_JumpIfInventory("istacticalclass",1,"Ready")					//R28.2
+		TNT1 A 0 A_TakeInventory("Stamina", 0)									//R28.2
+		Loop
+	SelectAnimation:
+		TNT1 A 1
+//		TNT1 A 0 A_JumpIfInventory("IsTacticalClass", 1, "ReplaceTactical")		//R28 DISABLED
+		MISS ABCD 1
+		Goto Ready
+/*	ReplaceTactical:
+		MISS A 1
+		TNT1 A 0 A_GiveInventory("64RocketLauncherTactical", 1)
+		TNT1 A 0 A_TakeInventory("64RocketLauncher", 1)
+		Goto Ready*/															//R28 DISABLED
+	Deselect:
+		MISG A 1 A_Lower
+		Loop
+	Select:
+		TNT1 AAAA 1 A_Raise
+		TNT1 AAAAAAAAAA 0 A_Raise
+		Goto SelectAnimation
+	Fire:
+		MISG A 1
+		TNT1 A 0 A_PlaySound("ROCKE3", 1)
+		MISG B 1 A_GunFlash
+		MISG B 0 A_Recoil (2)
+		MISG B 0 A_FireMissile
+		MISG B 1 A_SetPitch (pitch-2)
+		MISG B 1 A_SetPitch (pitch+0.8)
+		MISG B 1 A_SetPitch (pitch+0.6)
+		MISG B 1 A_SetPitch (pitch+0.4)
+		MISG B 1 A_SetPitch (pitch+0.2)
+		MISG B 1
+		MISG A 15
+		MISG B 0 A_ReFire
+		Goto Ready
+	Flash:
+		MISF A 2 Bright
+		MISF B 2 Bright
+		MISF CD 2 bright
+		Goto LightDone
+	Spawn:
+		LAUN A -1
+		Stop
+	}
+}
+
+actor 64Rocket : Rocket Replaces Rocket
+{
+scale 0.75
+-DEHEXPLOSION
+-ROCKETTRAIL
++EXTREMEDEATH
++THRUSPECIES
+Species "Marines"
+Speed 35																		//R13 WAS 50
+Damage 40																		//R13 NEW
+Radius 4
+Height 4
+Decal "BigScorch"																//R28.2	//R28.3 WAS SCORCH
+	States
+	{
+	Spawn:
+		MISL A 1 Bright
+		TNT1 A 0 A_PlaySound("DSRLAUN")
+		TNT1 A 0 A_SpawnItem("RocketFlare",-20,0)
+		TNT1 A 0 A_SpawnItem ("OldschoolRocketSmokeTrail2")
+		TNT1 A 0 A_CustomMissile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-30, 30))
+		Loop
+	Death:
+		//TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 AAAAAAAAA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, 180))
+		TNT1 AAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAAAAAAAA 0 A_CustomMissile ("ExplosionParticleVeryFast", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAAAAAAAAA 0 A_CustomMissile ("64ExplosionFireBase", 0, 0, random (0, 360), 2, random (0, 360))
+		EXPL AAAAA 0 A_CustomMissile ("ExplosionSmokeFast22", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)			//R28.2 ADDED
+		TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)				//R28.2 ADDED
+		TNT1 A 0 A_SpawnItem("BigRicoChet")
+		TNT1 A 0 A_SPawnItem("ExplosionAirDisplacementEffect")
+		TNT1 A 0 A_playSound("EXPLO3", 2)
+		TNT1 A 0 A_playSound("EXPLOSION", 1)
+		TNT1 A 0 Radius_Quake(2, 8, 0, 12, 0)
+		TNT1 A 2
+		TNT1 A 0 A_Explode
+		TNT1 A 0 A_SpawnItemEx ("LiquidExplosionEffectSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 10
+	stop
+	}
+}
+
+actor CyberRocket :64Rocket
+{
+Speed 30
+FastSpeed 35
+Damage 40
+-THRUSPECIES
+Species "none"
+}
+
+//DEATHMATCH STUFF
+Actor ISDM : Inventory
+{
+inventory.maxamount 1
+}
+
+Actor 64RocketLauncherDM : DoomWeapon
+{
+Weapon.SelectionOrder 1100
+Weapon.AmmoUse 1
+Weapon.AmmoGive 2
+Weapon.AmmoType "RocketAmmo"
++WEAPON.CHEATNOTWEAPON
+Inventory.PickupMessage "$GOTLAUNCHER"
+Tag "$TAG_ROCKETLAUNCHER"
+Scale 0.82
+	States
+	{
+	Ready:
+		MISG A 1 A_WeaponReady
+		TNT1 A 0 A_JumpIfInventory("istacticalclass",1,"Ready")					//R28.2
+		TNT1 A 0 A_TakeInventory("Stamina", 0)									//R28.2
+		Loop
+	Deselect:
+		MISG A 1 A_Lower
+		Loop
+	Select:
+		MISG A 1 A_Raise
+		Loop
+	Fire:
+		MISG A 1
+		TNT1 A 0 A_PlaySound("ROCKE3", 1)
+		MISG B 1 A_GunFlash
+		MISG B 0 A_Recoil (2)
+		MISG B 0 A_FireCustomMissile("DMRocket", 0, 1)
+		MISG B 1 A_SetPitch (pitch-2)
+		MISG B 1 A_SetPitch (pitch+0.8)
+		MISG B 1 A_SetPitch (pitch+0.6)
+		MISG B 1 A_SetPitch (pitch+0.4)
+		MISG B 1 A_SetPitch (pitch+0.2)
+		MISG B 1
+		MISG A 15
+		MISG B 0 A_ReFire
+		Goto Ready
+	Flash:
+		MISF A 2 Bright
+		MISF B 2 Bright
+		MISF CD 2 bright
+		Goto LightDone
+	Spawn:
+		LAUN A -1
+		Stop
+	}
+}
+
+actor DMRocket :64Rocket
+{
+Speed 30
+-THRUSPECIES
+Species "none"
+}

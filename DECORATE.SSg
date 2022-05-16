@@ -1,0 +1,99 @@
+//R3 ADDED SSG FOR CLASSICAL MODE
+ACTOR SuperShotgunSpawner : CustomInventory Replaces SuperShotgun				//The gun spawner that replaces the vanilla SSG spawn.
+{
+//+INVENTORY.ALWAYSPICKUP														//R12.1
+Inventory.PickupMessage "$GOTSHOTGUN2"											//R8.3 WAS $GOTSHOTGUN
+Inventory.PickupSound "WPICK"
+Scale 0.82
+	States
+	{
+	Spawn:
+		SGN2 A 1
+		SGN2 A -1
+		Stop
+	Pickup:
+//		TNT1 A 0 A_GiveInventory("Shell", 4)									//R3 NEW //R12.1 REMOVED
+		TNT1 A 0 A_JumpIfInventory("IsTacticalClass", 1, "Pickup2")				//R3 NEW
+		TNT1 A 0 A_JumpIfInventory("IsModern", 1, "Pickup2")					//R27.1 ADDED
+		TNT1 A 0 A_GiveInventory("64SuperShotgun")
+		Stop
+	Pickup2:																	//R3 NEW
+		TNT1 A 1																//R3 NEW
+		TNT1 A 0 A_GiveInventory("64SuperShotgunTactical", 1)					//R3 NEW
+		Stop
+	}
+}
+
+Actor 64SuperShotgun : DoomWeapon
+{
+Weapon.SelectionOrder 400
+Weapon.AmmoUse 2
+Weapon.AmmoGive 8
+Weapon.AmmoType "Shell"
++WEAPON.NOAUTOFIRE
+Inventory.PickupMessage "$GOTSHOTGUN2"
+Obituary "$OB_MPSSHOTGUN"
+Tag "$TAG_SUPERSHOTGUN"
+Scale 0.82
+VisibleToPlayerClass "64DoomPlayer"												//R11
+Inventory.ForbiddenTo "Tactical64DoomPlayer","Tactical64DoomPlayer_p", "Modern"		//R11 ADDED	//R15 ADDED TACTICAL P	//R28 ADDED MODERN
++INVENTORY.RESTRICTABSOLUTELY													//R12.1
+	states
+	{
+	Spawn:																		//R21
+		SGN2 A 1
+		SGN2 A -1
+		Stop
+	Ready:
+		SSGG A 1 A_WeaponReady
+		TNT1 A 0 A_JumpIfInventory("istacticalclass",1,"Ready")					//R28.2
+		TNT1 A 0 A_TakeInventory("Stamina", 0)									//R28.2
+		Loop
+	Select:
+		TNT1 AAAAA 1 A_Raise
+		TNT1 AAAAAAAAAA 0 A_Raise
+		Goto SelectAnimation
+	SelectAnimation:
+		SSGS A 1																//R3 WAS ABCD 1
+//		TNT1 A 0 A_JumpIfInventory("IsTacticalClass", 1, "ReplaceTactical")		//R3 NEW	//R28 DISABLED
+		SSGS BCD 1																//R3 NEW
+		Goto Ready
+/*	ReplaceTactical:															//R3 NEW REPLACE TACTICAL
+		SSGS A 1
+		TNT1 A 0 A_GiveInventory("64SuperShotgunTactical", 1)
+		TNT1 A 0 A_TakeInventory("64SuperShotgun", 1)
+		Goto Ready*/															//R28 DISABLED
+	Deselect:
+		SSGS DCBA 1
+		TNT1 AAAAAAAAAA 0 A_Lower
+		TNT1 A 1 A_Lower
+		Wait
+	Fire:
+		SSGG A 3
+		TNT1 AAAA 0 A_FireCustomMissile("GunFireSmoke", 0, 0, 0, 0, 0, 0)
+		TNT1 AA 0 A_SpawnItemEx("PlayerMuzzle1",30,5,30)
+		TNT1 AAAAAAAAAA 0 A_FireCustomMissile("Tracer", random(-6,6), 0, -1, -12, 0, random(-5,5))
+		SHTG A 0 A_FireBullets (8.0,6.0,20,6, "shotpuff")						//R24.2 WAS NUMBEULLETS 16	R26 WAS NUMBULLETS 18
+		TNT1 A 0 A_PlaySound("SSGFIRE", 1)
+		TNT1 A 0 A_ZoomFactor(0.75)
+		SSGF AB 1 BRIGHT
+		TNT1 A 0 A_ZoomFactor(1.0)
+		SSGF C 3 A_SetPitch (pitch-4)
+		SSGF D 1 A_SetPitch (pitch+2.6)
+		SSGG A 1 A_SetPitch (pitch+1.2)
+		SSGG A 1 A_SetPitch (pitch+0.8)
+		SSGG A 1 A_SetPitch (pitch+0.4)
+		SSGG AAAAAABCDEFG 1
+		TNT1 A 0 A_PlaySound("weapons/sshoto")
+		TNT1 AA 0 A_FireCustomMissile("SSGCaseSpawner",0,0,-10)
+		SSGG HIIIIIIIIIJKLM 1
+		TNT1 A 0 A_playsound("weapons/sshotl", 4)
+		SSGG NOPQ 1
+		TNT1 A 8
+		SSGG RS 1
+		TNT1 A 0 A_PlaySound("weapons/sshotc")
+		SSGG TUVWXYZAAAAA 1
+		TNT1 A 0 A_Refire
+		Goto Ready
+	}
+}

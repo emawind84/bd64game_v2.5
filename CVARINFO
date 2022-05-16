@@ -1,0 +1,33 @@
+//user int bd_bloodamount	= 2;												//R29 DISABLED
+user int bd_lowgraphicsmode = 0;
+
+server int zdoombrutalblood	= 2;
+server int zdoombrutaljanitor = 0;
+
+server int isrunningzandronum = 0;												//R30.8 WAS 1
+
+server int DynamicSpawnCvar = 0;												//R20
+server int DynamicSpawnCvar2 = 0;												//R20
+//server int DynamicSpawnCvar3 = 0;												//R20//R26 disabled
+
+//R26 D64 MONSTERS ONLY
+server int DynamicSpawnCvar4 = 0;
+
+//R26 SEPARATED SPAWNERS
+server int NImp_Spawner_Cvar = 0;
+server int NSpectre_Spawner_Cvar = 0;
+server int NCaco_Spawner_Cvar = 0;
+server int Hellhound_Spawner_Cvar = 0;
+server int Annihilator_Spawner_Cvar = 0;
+
+server int Lasergun_Spawner_Cvar = 0;
+server int Unmaker_Spawner_Cvar = 0;
+
+//R27
+server int Motherdemon_Spawner_Cvar = 0;
+
+//R29
+server int FloorDecal_Cvar = 0;
+
+//R30
+server int LFog_Cvar = 1;														//R30.8 was 0
